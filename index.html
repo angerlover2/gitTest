@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+
+
+		<table id="table" border="" cellspacing="0" cellpadding="0" width="50%">
+			<tr><th>Header</th><th>Header2</th></tr>
+			<tr><td>Data</td><td>1332</td></tr>
+			<tr><td>1332</td><td>1332</td></tr>
+			<tr><td>Data</td><td>1332</td></tr>
+			<tr><td>1332</td><td>1332</td></tr>
+			<tr><td>Data</td><td>1332</td></tr>
+			<tr><td>1332</td><td>1332</td></tr>
+			<tr><td>Data</td><td>1332</td></tr>
+			<tr><td>1332</td><td>1332</td></tr>
+			<tr><td>Data</td><td>1332</td></tr>
+			<tr><td>1332</td><td>1332</td></tr>
+		</table>
+
+
+
+
+<input type="button" id="btn" />
+<ul id="ul">
+  <li>aaaaaaaa</li>
+  <li>bbbbbbbb</li>
+  <li>cccccccc</li>
+</ul>
+
+
+
+
+
+
+
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>	
+		<script type="text/javascript">
+			//获取本地时间
+			function newDate() {
+				var date = new Date();
+				var year = date.getFullYear();
+				var mounth = date.getMonth();
+				var dat = date.getDate();
+				var hours = date.getHours();
+				var m = date.getMinutes();
+				var s = date.getSeconds();
+				return year + "年" + mounth + "月" + dat + "日" + hours + "：" + m + ":" + s
+			}
+
+			//数组去重
+			function delRepeat(obj) {
+				var arr = [];
+				for(var i = 0; i < obj.length; i++) {
+					if(arr.indexOf(obj[i]) < 0) {
+						arr.push(obj[i]);
+					}
+				}
+				return arr;
+			}
+
+			//数组排序（从小到大）
+			function sortNum(arr) {
+				var arr2 = arr.sort(function(a, b) {
+					return a - b;
+				})
+				return arr2;
+			}
+
+			//复杂json值的获取方式
+			var data={
+				"comments": [{
+					"content": "很不错嘛",
+					"id": 1,
+					"nickname": "纳尼"
+				}, {
+					"content": "哟西哟西",
+					"id": 2,
+					"nickname": "小强"
+				}],
+				"content": "你是木头人，哈哈。",
+				"infomap": {
+					"性别": "男",
+					"职业": "程序员",
+					"博客": "http:\/\/www.cnblogs.com\/codeplus\/"
+				},
+				"title": "123木头人"
+			}
+			 //jquery解析map数据
+			$.each(data.infomap,function(key,value){
+	           console.log(key+"----"+value+"<br/><hr/>");
+	        });
+         	//解析数组
+	        $.each(data.comments, function(i, item) {
+               console.log(item.id)
+               console.log(item.nickname)  
+               console.log(item.content) 
+	        });
+	        
+	        
+	        //JSON.parse()和JSON.stringify()
+	        //parse用于从一个字符串中解析出json对象,如
+	        var str = '{"name":"huangxiaojian","age":"23"}'
+			//结果：
+			
+			JSON.parse(str)
+			//Object
+			//age: "23"
+			//name: "huangxiaojian"
+			//__proto__: Object
+			
+			//注意：单引号写在{}外，每个属性名都必须用双引号，否则会抛出异常。
+			
+			//stringify()用于从一个对象解析出字符串，如
+			var a = {a:1,b:2}
+			JSON.stringify(a)     //"{"a":1,"b":2}"
+			
+			//6、jQuery插件开发，有一数据列表页面，需求如下：
+			/*
+			a)	奇数行无背景色
+			b)	偶数行背景色#EEE
+			c)	鼠标移入某行时背景色#0066CC，文字颜色为白色；移出还原*/
+
+			function tableColor(obj){
+				for(var i=0;i<obj.length;i++){
+					obj.eq(2*i+1).css({"background":"#EEE"});
+					obj.eq(2*i).css({"background":"#fff"});
+				};
+				var oldColor;
+				obj.hover(function(){
+					oldColor=this.style.backgroundColor;
+					$(this).css({"background":"#0066CC","color":"#fff"});
+					return oldColor
+				},function(){
+					$(this).css({"background":oldColor,"color":"#000"});
+				})
+			}
+			
+			tableColor($("#table tr"));
+			
+			//时间委托
+			window.onload = function(){
+			  var oUl = document.getElementById("ul");
+			  var aLi = oUl.getElementsByTagName("li");
+			  var oBtn = document.getElementById("btn");
+			  var iNow = 4;
+			
+			  oUl.onmouseover = function(ev){
+			    var ev = ev || window.event;
+			    var target = ev.target || ev.srcElement;
+			   // console.log(target);								//target 为元素节点  target.nodeName节点名字 “Li” 
+			    if(target.nodeName.toLowerCase() == "li"){          //toLowerCase()转换为小写字母
+			    target.style.background = "red";
+			    }
+			  }
+			  oUl.onmouseout = function(ev){
+			    var ev = ev || window.event;
+			    var target = ev.target || ev.srcElement;
+			    if(target.nodeName.toLowerCase() == "li"){
+			    target.style.background = "";
+			    }
+			  }
+			  oBtn.onclick = function(){
+			    iNow ++;
+			    var oLi = document.createElement("li");
+			    oLi.innerHTML = 1111 *iNow;
+			    oUl.appendChild(oLi);
+			  }
+			}
+
+  
+
+			//计算0到n的所有整数中，数字x（0=<x=<9）共出现多少次  例如1在0-11中 数字1出现了4次
+			function strNum(x,n){
+				var arr=[];
+				var c=0;
+				for(var i=0;i<=n;i++){
+					arr.push(i);
+				}
+				arr=arr.join("").split("");
+				for(var j=0;j<arr.length;j++){
+					if(arr[j].indexOf(x)<0){
+						c++;
+					}
+				}
+				console.log(arr);
+				console.log(arr.length-c);
+			}
+			
+			strNum(5,50)  //计算0-50中出现几次5
+			
+			//简单版
+			function strNum2(min,max,j){
+				var str="";
+				for(var i=min;i<=max;i++){
+				   str+=i;
+				}
+				return str.match(new RegExp(j,"g")).length;
+			};
+			strNum2(0,10,1)
+			
+		</script>
+	</body>
+
+</html>
