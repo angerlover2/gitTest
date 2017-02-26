@@ -37,10 +37,9 @@
 
 
 
-
-
 		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>	
 		<script type="text/javascript">
+			
 			//获取本地时间
 			function newDate() {
 				var date = new Date();
@@ -51,7 +50,7 @@
 				var m = date.getMinutes();
 				var s = date.getSeconds();
 				return year + "年" + mounth + "月" + dat + "日" + hours + "：" + m + ":" + s
-			}
+			};
 
 			//数组去重
 			function delRepeat(obj) {
@@ -70,7 +69,7 @@
 					return a - b;
 				})
 				return arr2;
-			}
+			};
 
 			//复杂json值的获取方式
 			var data={
@@ -143,7 +142,7 @@
 			
 			tableColor($("#table tr"));
 			
-			//时间委托
+			//事件委托
 			window.onload = function(){
 			  var oUl = document.getElementById("ul");
 			  var aLi = oUl.getElementsByTagName("li");
@@ -171,7 +170,7 @@
 			    oLi.innerHTML = 1111 *iNow;
 			    oUl.appendChild(oLi);
 			  }
-			}
+			};
 
   
 
@@ -190,19 +189,64 @@
 				}
 				console.log(arr);
 				console.log(arr.length-c);
-			}
+			};
 			
-			strNum(5,50)  //计算0-50中出现几次5
+			strNum(5,50);  //计算0-50中出现几次5
 			
 			//简单版
 			function strNum2(min,max,j){
-				var str="";
+			 	var str="";
 				for(var i=min;i<=max;i++){
 				   str+=i;
 				}
-				return str.match(new RegExp(j,"g")).length;
+				console.log(str.match(new RegExp(j,"g")).length);
 			};
-			strNum2(0,10,1)
+			strNum2(0,10,1);
+			
+			//返回一个字符串中n出现的次数
+			function strNum4(str,n){
+				var arr=[];
+				var num=str.indexOf(n);
+				while(num>-1){
+					arr.push(num);
+					num=str.indexOf(n,num+1);
+				}
+				console.log(n+"出现了"+arr.length+"次");
+			}
+			strNum4("this is a test,is ok!","s");
+			
+			
+			//返回5-10之间的随机数
+			function numRandom(start,end){
+				var total=end-start+1;
+				console.log(Math.floor(Math.random()*total+start));
+			}
+			numRandom(5,10);
+			
+			
+			//统计字符串中字母个数或统计最多字母数
+			var str = "aaaabbbccccddfgh";
+			function totalStr(str){
+				var obj  = {};
+				for(var i=0;i<str.length;i++){
+				    var v = str.charAt(i);
+				    if(obj[v] && obj[v].value == v){
+				        obj[v].count = ++ obj[v].count;
+				    }else{
+				        obj[v] = {};
+				        obj[v].count = 1;
+				        obj[v].value = v;
+				    }
+				}
+				for(key in obj){
+				    console.log(obj[key].value +'='+obj[key].count+' '); // a=4  b=3  c=4  d=2  f=1  g=1  h=1
+				}
+			}
+			totalStr(str);
+			
+			
+			
+			
 			
 		</script>
 	</body>
